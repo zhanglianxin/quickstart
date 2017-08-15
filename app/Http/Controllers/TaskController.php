@@ -6,16 +6,27 @@ use Illuminate\Http\Request;
 
 use App\Task;
 
+use App\Repositories\TaskRepository;
+
 use App\Http\Requests;
 
 class TaskController extends Controller
 {
-    public function __construct() {
+    /**
+     * 任务资源库的实例。
+     *
+     * @var TaskRepository
+     */
+    protected $tasks;
+
+    public function __construct(TaskRepository $tasks) {
         $this->middleware('auth');
+
+        $this->tasks = $tasks;
     }
 
     public function index(Request $request) {
-        $tasks = Task::where('user_id', $request->user()->id)->get();
+        $tasks = $this->tasks->forUser($request->user());
 
         return view('tasks.index', ['tasks' => $tasks]);
     }
