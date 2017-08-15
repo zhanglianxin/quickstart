@@ -14,3 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// 认证路由
+Route::auth();
+
+Route::get('/home', 'HomeController@index');
