@@ -46,4 +46,17 @@ class TaskController extends Controller
             return redirect()->back()->withInput()->withErrors('保存失败！');
         }
     }
+
+    // public function destory(Request $request, $taskId) {
+    public function destory(Request $request, Task $task) {
+        // 授权策略
+        $result = $this->authorize('destroy', $task);
+
+        if ($result) {
+            $task->delete();
+            return redirect('/tasks');
+        } else {
+            return redirect()->back()->withErrors('删除失败！');
+        }
+    }
 }
