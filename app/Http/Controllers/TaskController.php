@@ -5,10 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Task;
-
+use App\Task1;
 use App\Repositories\TaskRepository;
-
-use App\Http\Requests;
 
 class TaskController extends Controller
 {
@@ -27,7 +25,8 @@ class TaskController extends Controller
 
     public function index(Request $request) {
         $tasks = $this->tasks->forUser($request->user());
-
+        $tasks1 = Task1::forUser($request->user());
+        dd($tasks, $tasks1);
         return view('tasks.index', ['tasks' => $tasks]);
     }
 
